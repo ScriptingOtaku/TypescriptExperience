@@ -5,7 +5,7 @@ import Signal from "@rbxts/signal";
 import { PlayerBase } from "shared/Templates/PlayerBase";
 import Remotes from "shared/remotes";
 import { QuestService } from "./QuestService";
-import { PlayerQuestUpdated } from "server/signals";
+import { AddCurrency, PlayerQuestUpdated } from "server/signals";
 import { QuestBase } from "shared/Templates/QuestBase";
 
 const Information = Remotes.Server.GetNamespace("Information");
@@ -13,6 +13,8 @@ const GetQuests = Information.Get("GetQuests");
 const GetCurrency = Information.Get("GetCurrency");
 const GetPlayer_R = Information.Get("GetPlayer");
 const PlayerFinishedLoading = Information.Get("PlayerFinishedLoading");
+const DataRemotes = Remotes.Server.GetNamespace("Data");
+const CurrencyChanged = DataRemotes.Get("CurrencyChanged");
 
 export namespace PlayerService {
 	export const PlayerConnected = new Signal<() => void>(); // Gets fired when a player starts to join
@@ -52,6 +54,18 @@ export namespace PlayerService {
 		if (GetPlayer(player)!.quests) {
 			GetPlayer(player)!.quests = quests;
 		}
+	});
+	AddCurrency.Connect((player: Player, currencyType: string, value: number) => {
+		const playerCurrency = GetPlayer(player)!.currency;
+		switch (currencyType) {
+			case "CASH":
+				playerCurrency.cash += value;
+				break;
+			case "DIAMONDS":
+				playerCurrency.diamonds += value;
+				break;
+		}
+		CurrencyChanged.SendToPlayer(player, GetPlayer(player)!.currency);
 	});
 	GetQuests.SetCallback((player: Player) => GetPlayer(player)!.quests);
 	GetPlayer_R.SetCallback((player: Player) => GetPlayer(player)!);
