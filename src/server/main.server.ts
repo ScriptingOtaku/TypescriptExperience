@@ -1,3 +1,1 @@
-import { makeHello } from "shared/module";
-
-print(makeHello("main.server.ts"));
+import * as PlayerService from "./services/PlayerService"; // Literally only here so the module would load.
