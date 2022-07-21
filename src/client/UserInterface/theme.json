@@ -1,5 +1,10 @@
 {
     "MainColor": "#3dbaff",
     "SecondaryColor": "#3091ca",
-    "hoverTransparency": 0.85
+    "darkThingColor": "#383838",
+    "gray": "#b1b3b3",
+    "hoverTransparency": 0.85,
+    "exitColor1": "#fc3a3f",
+    "exitColor2": "#b11c28",
+    "progress": "#22ff42"
 }
