@@ -1,5 +1,6 @@
 import Roact, { Children } from "@rbxts/roact";
 import { Players } from "@rbxts/services";
+import menuApp from "./menu";
 import sidebarApp from "./SideBar";
 
 const Player = Players.LocalPlayer;
@@ -13,6 +14,7 @@ Roact.mount(
 		},
 		{
 			sidebar: Roact.createElement(sidebarApp),
+			menu: Roact.createElement(menuApp),
 		},
 	),
 	PlayerGui,

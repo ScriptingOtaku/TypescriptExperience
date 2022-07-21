@@ -30,7 +30,7 @@ export default class ButtonBind extends Component<Props, State> {
 						SortOrder={"LayoutOrder"}
 						VerticalAlignment={"Top"}
 					/>
-					<Button index={1} icon={"rbxassetid://8368486930"} />
+					<Button index={1} icon={"rbxassetid://8368486930"} page={"Quests"} />
 				</frame>
 			</frame>
 		);

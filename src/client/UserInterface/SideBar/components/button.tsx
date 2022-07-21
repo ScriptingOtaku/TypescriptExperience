@@ -1,9 +1,11 @@
 import Roact, { Component } from "@rbxts/roact";
+import { ChangePage } from "client/UserInterface/signals";
 import theme from "client/UserInterface/theme.json";
 
 interface Props {
 	index: number;
 	icon: string;
+	page: string;
 }
 
 interface State {
@@ -24,7 +26,7 @@ export default class Button extends Component<Props, State> {
 				BackgroundTransparency={1}
 				Text={""}
 				Event={{
-					MouseButton1Click: () => print("Quest Button Clicked"),
+					MouseButton1Click: () => ChangePage.Fire(this.props.page),
 					MouseEnter: () => this.setState({ hovering: true }),
 					MouseLeave: () => this.setState({ hovering: false }),
 				}}
