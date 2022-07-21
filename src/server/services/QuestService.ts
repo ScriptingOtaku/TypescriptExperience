@@ -57,8 +57,10 @@ class QuestHandler {
 	}
 	public AddQuest(quest: QuestBase) {
 		this.quests.set(quest.questId, quest);
+		QuestsChanged.SendToPlayer(this.player, this.quests);
 	}
 	public RemoveQuest(quest: number) {
 		this.quests.delete(quest);
+		QuestsChanged.SendToPlayer(this.player, this.quests);
 	}
 }

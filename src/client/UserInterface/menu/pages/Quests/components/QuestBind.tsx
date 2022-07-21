@@ -1,11 +1,15 @@
-import Roact, { Component, createRef, Ref } from "@rbxts/roact";
-import { rewardType } from "shared/Templates/QuestBase";
+import Roact, { Component, createRef, Element, Ref } from "@rbxts/roact";
+import { QuestBase, rewardType } from "shared/Templates/QuestBase";
 import QuestBox from "./QuestBox";
+import Remotes from "shared/remotes";
+
+const DataRemotes = Remotes.Client.GetNamespace("Data");
 
 interface Props {}
 
 interface State {
 	absoluteContentSize: Vector2;
+	quests: Map<number, QuestBase>;
 }
 
 export default class QuestBind extends Component<Props, State> {
@@ -19,6 +23,23 @@ export default class QuestBind extends Component<Props, State> {
 		super(props);
 		this.uilistref = createRef();
 		this.setState({ absoluteContentSize: Vector2.zero });
+	}
+
+	private renderAllQuests(quests: Map<number, QuestBase>): Array<Element> {
+		if (!quests) return [];
+		const Array: Array<Element> = [];
+		quests.forEach((value: QuestBase, key: number) => {
+			Array.push(
+				Roact.createElement(QuestBox, {
+					TextString: value.questString,
+					Completed: value.QuestCount,
+					FinalCount: value.QuestFinish,
+					rewardType: value.RewardType,
+					rewardConent: value.RewardContent,
+				}),
+			);
+		});
+		return Array;
 	}
 
 	render() {
@@ -47,6 +68,7 @@ export default class QuestBind extends Component<Props, State> {
 						rewardType={rewardType.CASH}
 						rewardConent={100}
 					/>
+					{this.renderAllQuests(this.state.quests)}
 				</frame>
 			</scrollingframe>
 		);
@@ -56,5 +78,8 @@ export default class QuestBind extends Component<Props, State> {
 			.getValue()
 			?.GetPropertyChangedSignal("AbsoluteContentSize")
 			.Connect(() => this.setState({ absoluteContentSize: this.uilistref.getValue()!.AbsoluteContentSize }));
+		DataRemotes.OnEvent("QuestsChanged", (quests: Map<number, QuestBase>) =>
+			this.setState({ quests: quests }),
+		).catch();
 	}
 }
