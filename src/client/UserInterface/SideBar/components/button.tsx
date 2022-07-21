@@ -1,4 +1,4 @@
-import Roact, { Component, setGlobalConfig } from "@rbxts/roact";
+import Roact, { Component } from "@rbxts/roact";
 import theme from "client/UserInterface/theme.json";
 
 interface Props {
@@ -10,7 +10,7 @@ interface State {
 	hovering: boolean;
 }
 
-export default class button extends Component<Props, State> {
+export default class Button extends Component<Props, State> {
 	public static validateProps() {
 		return [true] as unknown as LuaTuple<[boolean, string?]>;
 	}
@@ -20,8 +20,7 @@ export default class button extends Component<Props, State> {
 			<textbutton
 				Position={new UDim2(0, 13.37, 0, 395.5)}
 				LayoutOrder={this.props.index}
-				Size={new UDim2(0.25, 0, 0.25, 0)}
-				SizeConstraint={Enum.SizeConstraint.RelativeXX}
+				Size={new UDim2(0.25, 0, 1, 0)}
 				BackgroundTransparency={1}
 				Text={""}
 				Event={{
@@ -30,6 +29,11 @@ export default class button extends Component<Props, State> {
 					MouseLeave: () => this.setState({ hovering: false }),
 				}}
 			>
+				<uiaspectratioconstraint
+					AspectRatio={1}
+					AspectType={Enum.AspectType.FitWithinMaxSize}
+					DominantAxis={Enum.DominantAxis.Width}
+				/>
 				<imagelabel
 					Key={"Background"}
 					Size={new UDim2(1, 0, 1, 0)}
@@ -63,5 +67,8 @@ export default class button extends Component<Props, State> {
 				/>
 			</textbutton>
 		);
+	}
+	protected didMount(): void {
+		this.setState({ hovering: false });
 	}
 }
