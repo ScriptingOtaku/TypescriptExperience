@@ -1,6 +1,10 @@
 import Roact, { PureComponent } from "@rbxts/roact";
 import theme from "client/UserInterface/theme.json";
+import Remotes from "shared/remotes";
 import { rewardType } from "shared/Templates/QuestBase";
+
+const DataRemotes = Remotes.Client.GetNamespace("Data");
+const CompleteQuest = DataRemotes.Get("CompleteQuest");
 
 interface Props {
 	TextString: string;
@@ -8,6 +12,7 @@ interface Props {
 	FinalCount: number;
 	rewardType: rewardType;
 	rewardConent: number;
+	questId: number;
 }
 
 export default class QuestBox extends PureComponent<Props> {
@@ -80,7 +85,29 @@ export default class QuestBox extends PureComponent<Props> {
 					TextXAlignment={"Left"}
 					Text={this.props.Completed + "/" + this.props.FinalCount}
 				/>
-				<textbutton Key={"Claim Button"} Visible={false}></textbutton>
+				<textbutton
+					Key={"Claim Button"}
+					Visible={this.props.Completed === this.props.FinalCount}
+					BackgroundColor3={Color3.fromHex(theme.progress)}
+					Size={new UDim2(0.132, 0, 0.296, 0)}
+					Position={new UDim2(0.433, 0, 0.649, 0)}
+					ZIndex={2}
+					Event={{ MouseButton1Click: () => CompleteQuest.SendToServer(this.props.questId) }}
+				>
+					<uicorner CornerRadius={new UDim(0.4, 0)} />
+					<uigradient
+						Rotation={90}
+						Color={new ColorSequence(new Color3(1, 1, 1), Color3.fromHex(theme.gray))}
+					/>
+					<textlabel
+						Size={new UDim2(1, 0, 1, 0)}
+						BackgroundTransparency={1}
+						TextColor3={new Color3(1, 1, 1)}
+						TextScaled={true}
+						Font={"SourceSansBold"}
+						Text={"Claim"}
+					/>
+				</textbutton>
 				<textbutton
 					Key={"Skip Button"}
 					BackgroundColor3={Color3.fromHex(theme.darkThingColor)}

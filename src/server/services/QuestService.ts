@@ -36,6 +36,7 @@ export namespace QuestService {
 	}
 
 	PlayerQuestAction.Connect((player: Player, action: questAction) => PlayerQuests.get(player)?.UpdateQuests(action));
+	DataRemotes.OnEvent("CompleteQuest", (player: Player, id: number) => PlayerQuests.get(player)?.CompleteQuest(id));
 }
 
 class QuestHandler {
@@ -46,21 +47,29 @@ class QuestHandler {
 	}
 	public UpdateQuests(action: questAction) {
 		this.quests.forEach((value: QuestBase, key: number) => {
-			if (value.QuestAction === action) value.QuestCount++;
-			if (value.QuestCount > value.QuestFinish) {
-				QuestService.ParseRewards(this.player, value.RewardType, value.RewardContent);
-				this.RemoveQuest(key);
-			}
+			if (value.QuestAction === action && value.QuestCount < value.QuestFinish) value.QuestCount++;
 		});
 		PlayerQuestUpdated.Fire(this.player, this.quests);
 		QuestsChanged.SendToPlayer(this.player, this.quests);
 	}
 	public AddQuest(quest: QuestBase) {
-		this.quests.set(quest.questId, quest);
+		const n = table.clone(quest);
+		this.quests.set(quest.questId, n);
+		PlayerQuestUpdated.Fire(this.player, this.quests);
 		QuestsChanged.SendToPlayer(this.player, this.quests);
 	}
 	public RemoveQuest(quest: number) {
 		this.quests.delete(quest);
+		PlayerQuestUpdated.Fire(this.player, this.quests);
 		QuestsChanged.SendToPlayer(this.player, this.quests);
+	}
+	public CompleteQuest(quest: number) {
+		const q = this.quests.get(quest);
+		if (q) {
+			if (q.QuestCount === q.QuestFinish) {
+				QuestService.ParseRewards(this.player, q.RewardType, q.RewardContent);
+				this.RemoveQuest(quest);
+			}
+		}
 	}
 }

@@ -51,9 +51,7 @@ export namespace PlayerService {
 	Players.PlayerRemoving.Connect((player: Player) => RemovePlayer(player));
 	GetCurrency.SetCallback((player: Player) => GetPlayer(player)!.currency);
 	PlayerQuestUpdated.Connect((player: Player, quests: Map<number, QuestBase>) => {
-		if (GetPlayer(player)!.quests) {
-			GetPlayer(player)!.quests = quests;
-		}
+		GetPlayer(player)!.quests = quests;
 	});
 	AddCurrency.Connect((player: Player, currencyType: string, value: number) => {
 		const playerCurrency = GetPlayer(player)!.currency;
@@ -67,6 +65,8 @@ export namespace PlayerService {
 		}
 		CurrencyChanged.SendToPlayer(player, GetPlayer(player)!.currency);
 	});
-	GetQuests.SetCallback((player: Player) => GetPlayer(player)!.quests);
+	GetQuests.SetCallback((player: Player) => {
+		return GetPlayer(player)!.quests;
+	});
 	GetPlayer_R.SetCallback((player: Player) => GetPlayer(player)!);
 }

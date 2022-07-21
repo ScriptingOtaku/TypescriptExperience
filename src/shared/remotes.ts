@@ -12,6 +12,7 @@ const Remotes = Net.CreateDefinitions({
 	Data: Definitions.Namespace({
 		CurrencyChanged: Definitions.ServerToClientEvent<[Currencies]>(),
 		QuestsChanged: Definitions.ServerToClientEvent<[Map<number, QuestBase>]>(),
+		CompleteQuest: Definitions.ClientToServerEvent<[QuestId: number]>(),
 	}),
 });
 

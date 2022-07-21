@@ -4,6 +4,7 @@ import QuestBox from "./QuestBox";
 import Remotes from "shared/remotes";
 
 const DataRemotes = Remotes.Client.GetNamespace("Data");
+const InformationRemotes = Remotes.Client.GetNamespace("Information");
 
 interface Props {}
 
@@ -36,6 +37,7 @@ export default class QuestBind extends Component<Props, State> {
 					FinalCount: value.QuestFinish,
 					rewardType: value.RewardType,
 					rewardConent: value.RewardContent,
+					questId: value.questId,
 				}),
 			);
 		});
@@ -61,13 +63,6 @@ export default class QuestBind extends Component<Props, State> {
 						VerticalAlignment={"Top"}
 						Ref={this.uilistref}
 					/>
-					<QuestBox
-						TextString={"test quest"}
-						Completed={10}
-						FinalCount={100}
-						rewardType={rewardType.CASH}
-						rewardConent={100}
-					/>
 					{this.renderAllQuests(this.state.quests)}
 				</frame>
 			</scrollingframe>
@@ -78,6 +73,14 @@ export default class QuestBind extends Component<Props, State> {
 			.getValue()
 			?.GetPropertyChangedSignal("AbsoluteContentSize")
 			.Connect(() => this.setState({ absoluteContentSize: this.uilistref.getValue()!.AbsoluteContentSize }));
+		InformationRemotes.Get("GetQuests")
+			.CallServerAsync()
+			.then((quests: Map<number, QuestBase> | undefined) => {
+				if (quests !== undefined) {
+					this.setState({ quests: quests });
+				}
+			})
+			.catch();
 		DataRemotes.OnEvent("QuestsChanged", (quests: Map<number, QuestBase>) =>
 			this.setState({ quests: quests }),
 		).catch();
