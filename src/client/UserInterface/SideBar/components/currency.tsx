@@ -1,6 +1,10 @@
 import Roact, { Component } from "@rbxts/roact";
 import UIStroke from "client/UserInterface/components/UIStroke";
 import theme from "client/UserInterface/theme.json";
+import Remotes from "shared/remotes";
+import { Currencies } from "shared/Templates/PlayerBase";
+
+const DataRemotes = Remotes.Client.GetNamespace("Data");
 
 enum icons {
 	cash,
@@ -11,11 +15,18 @@ interface Props {
 	icon: icons;
 }
 
-interface State {}
+interface State {
+	value: number;
+}
 
 export default class Currency extends Component<Props, State> {
 	public static validateProps() {
 		return [true] as unknown as LuaTuple<[boolean, string?]>;
+	}
+
+	constructor(props: Props) {
+		super(props);
+		this.setState({ value: 0 });
 	}
 
 	render() {
@@ -83,6 +94,7 @@ export default class Currency extends Component<Props, State> {
 					BackgroundTransparency={1}
 					Font={Enum.Font.SourceSansBold}
 					TextScaled={true}
+					Text={tostring(this.state.value)}
 					TextXAlignment={Enum.TextXAlignment.Left}
 					TextColor3={new Color3(1, 1, 1)}
 				>
@@ -90,5 +102,11 @@ export default class Currency extends Component<Props, State> {
 				</textlabel>
 			</frame>
 		);
+	}
+
+	protected didMount(): void {
+		DataRemotes.OnEvent("CurrencyChanged", (currency: Currencies) =>
+			this.setState({ value: this.props.icon === 0 ? currency.cash : currency.diamonds }),
+		).catch((err: unknown) => print(tostring(err)));
 	}
 }
