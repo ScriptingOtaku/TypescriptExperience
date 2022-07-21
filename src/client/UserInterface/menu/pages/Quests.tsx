@@ -12,7 +12,7 @@ export default class Quests extends Component<Props, State> {
 	render() {
 		return (
 			<imagelabel
-				Size={new UDim2(0, 100, 0, 100)}
+				Size={new UDim2(0, 500, 0, 500)}
 				Position={new UDim2(0.5, 0, 0.5, 0)}
 				AnchorPoint={new Vector2(0.5, 0.5)}
 				Image={"rbxassetid://7462343062"}
