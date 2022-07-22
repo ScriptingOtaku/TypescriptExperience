@@ -10,6 +10,13 @@ export default class Button extends Component<SidebarNamespace.IButtonData, Stat
 	}
 
 	render() {
-		return <textbutton Event={{ MouseButton1Click: () => ChangePage.Fire(this.props.page) }}></textbutton>;
+		return (
+			<textbutton
+				Text={tostring(this.props.page)}
+				Event={{
+					MouseButton1Click: () => ChangePage.Fire(this.props.page),
+				}}
+			></textbutton>
+		);
 	}
 }

@@ -1,12 +1,13 @@
 import Roact, { Children } from "@rbxts/roact";
 import { Players } from "@rbxts/services";
+import PageMaker from "./apps/PageMaker";
 import Sidebar from "./apps/Sidebar";
-import { IButtonData, IValuebarData, Updaters } from "./Globals";
+import { PagesNamespace, SidebarNamespace, Updaters } from "./Globals";
 
 const Player = Players.LocalPlayer;
 const PlayerGui = Player.WaitForChild("PlayerGui");
 
-const ValueBars: Array<IValuebarData> = [
+const ValueBars: Array<SidebarNamespace.IValuebarData> = [
 	{
 		updater: Updaters.CASH,
 		index: 1,
@@ -16,9 +17,9 @@ const ValueBars: Array<IValuebarData> = [
 		index: 2,
 	},
 ];
-const Buttons: Array<IButtonData> = [
+const Buttons: Array<SidebarNamespace.IButtonData> = [
 	{
-		page: "Quests",
+		page: PagesNamespace.Pages.QUESTS,
 		index: 1,
 	},
 ];
@@ -34,6 +35,7 @@ Roact.mount(
 				ValueBars: ValueBars,
 				Buttons: Buttons,
 			}),
+			Pages: Roact.createElement(PageMaker),
 		},
 	),
 	PlayerGui,
