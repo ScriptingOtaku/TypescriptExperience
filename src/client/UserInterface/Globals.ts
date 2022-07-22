@@ -19,6 +19,8 @@ export namespace SidebarNamespace {
 }
 
 export namespace PagesNamespace {
+	export const CORNER_RADIUS = new UDim(0, 15);
+	export const TOPBAR_SIZE_Y = 50;
 	export enum Pages {
 		NONE,
 		QUESTS,

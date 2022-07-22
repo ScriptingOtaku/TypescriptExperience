@@ -5,7 +5,7 @@ export default function TextOutline() {
 	return (
 		<uistroke
 			ApplyStrokeMode={Enum.ApplyStrokeMode.Border}
-			Color={Color3.fromHex(theme.White)}
+			Color={Color3.fromHex(theme.Background)}
 			LineJoinMode={Enum.LineJoinMode.Round}
 			Thickness={2.5}
 		/>

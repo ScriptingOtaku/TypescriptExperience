@@ -1,5 +1,6 @@
 {
     "MainColor": "#3dbaff",
     "TextHightlight": "#3091ca",
-    "White": "ffffff"
+    "Background": "ffffff",
+    "Exit": "#c4281c"
 }

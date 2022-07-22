@@ -11,11 +11,12 @@ export default class Quests extends PureComponent<Props, State> {
 
 	render() {
 		return (
-			<frame
-				BackgroundColor3={new Color3(1, 0, 0)}
-				BackgroundTransparency={0.5}
+			<imagelabel
 				Size={new UDim2(1, 0, 1, 0)}
-			></frame>
+				Image={"rbxassetid://7462343062"}
+				BorderSizePixel={0}
+				BackgroundTransparency={1}
+			></imagelabel>
 		);
 	}
 }
