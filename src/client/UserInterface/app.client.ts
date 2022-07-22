@@ -1,10 +1,27 @@
 import Roact, { Children } from "@rbxts/roact";
 import { Players } from "@rbxts/services";
-import menuApp from "./menu";
-import sidebarApp from "./SideBar";
+import Sidebar from "./apps/Sidebar";
+import { IButtonData, IValuebarData, Updaters } from "./apps/Sidebar/data";
 
 const Player = Players.LocalPlayer;
 const PlayerGui = Player.WaitForChild("PlayerGui");
+
+const ValueBars: Array<IValuebarData> = [
+	{
+		updater: Updaters.CASH,
+		index: 1,
+	},
+	{
+		updater: Updaters.DIAMONDS,
+		index: 2,
+	},
+];
+const Buttons: Array<IButtonData> = [
+	{
+		page: "Quests",
+		index: 1,
+	},
+];
 
 Roact.mount(
 	Roact.createElement(
@@ -13,8 +30,10 @@ Roact.mount(
 			IgnoreGuiInset: true,
 		},
 		{
-			sidebar: Roact.createElement(sidebarApp),
-			menu: Roact.createElement(menuApp),
+			Sidebar: Roact.createElement(Sidebar, {
+				ValueBars: ValueBars,
+				Buttons: Buttons,
+			}),
 		},
 	),
 	PlayerGui,
