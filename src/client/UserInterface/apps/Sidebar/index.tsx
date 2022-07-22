@@ -16,7 +16,8 @@ export default class Sidebar extends Component<Props> {
 	render() {
 		return (
 			<frame
-				Position={new UDim2(0, 0, 0.5, 0)}
+				BackgroundTransparency={1}
+				Position={new UDim2(0.01, 0, 0.5, 0)}
 				AnchorPoint={new Vector2(0, 0.5)}
 				Size={
 					new UDim2(
@@ -24,12 +25,13 @@ export default class Sidebar extends Component<Props> {
 						0,
 						0,
 						this.props.ValueBars.size() * SidebarNamespace.VALUE_BAR_SIZE_Y +
-							this.props.Buttons.size() * SidebarNamespace.VALUE_BAR_SIZE_Y,
+							this.props.Buttons.size() * SidebarNamespace.VALUE_BAR_SIZE_Y +
+							SidebarNamespace.PADDING,
 					)
 				}
 			>
 				<uilistlayout
-					Padding={new UDim(0, 0)}
+					Padding={new UDim(0, SidebarNamespace.PADDING)}
 					FillDirection={"Vertical"}
 					HorizontalAlignment={"Center"}
 					SortOrder={"LayoutOrder"}
@@ -37,11 +39,12 @@ export default class Sidebar extends Component<Props> {
 				/>
 				<frame
 					Key={"Value Bar Container"}
+					BackgroundTransparency={1}
 					Size={new UDim2(1, 0, 0, this.props.ValueBars.size() * SidebarNamespace.VALUE_BAR_SIZE_Y)}
 					LayoutOrder={1}
 				>
 					<uilistlayout
-						Padding={new UDim(0, 0)}
+						Padding={new UDim(0, SidebarNamespace.PADDING)}
 						FillDirection={"Vertical"}
 						HorizontalAlignment={"Center"}
 						SortOrder={"LayoutOrder"}
@@ -50,6 +53,8 @@ export default class Sidebar extends Component<Props> {
 					{this.generateValueBars()}
 				</frame>
 				<frame
+					Key={"Button Container"}
+					BackgroundTransparency={1}
 					Size={new UDim2(1, 0, 0, this.props.Buttons.size() * SidebarNamespace.VALUE_BAR_SIZE_Y)}
 					LayoutOrder={2}
 				>

@@ -15,6 +15,7 @@ export namespace SidebarNamespace {
 		index: number;
 	}
 	export const VALUE_BAR_SIZE_Y = 25;
+	export const PADDING = 5;
 }
 
 export namespace PagesNamespace {
