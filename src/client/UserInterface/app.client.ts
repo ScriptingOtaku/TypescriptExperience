@@ -1,7 +1,7 @@
 import Roact, { Children } from "@rbxts/roact";
 import { Players } from "@rbxts/services";
 import Sidebar from "./apps/Sidebar";
-import { IButtonData, IValuebarData, Updaters } from "./apps/Sidebar/data";
+import { IButtonData, IValuebarData, Updaters } from "./Globals";
 
 const Player = Players.LocalPlayer;
 const PlayerGui = Player.WaitForChild("PlayerGui");

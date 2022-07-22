@@ -1,9 +1,9 @@
 import Roact, { Component } from "@rbxts/roact";
-import { IValuebarData, VALUE_BAR_SIZE_Y } from "../data";
+import { SidebarNamespace } from "../../../Globals";
 
 interface State {}
 
-export default class ValueBar extends Component<IValuebarData, State> {
+export default class ValueBar extends Component<SidebarNamespace.IValuebarData, State> {
 	public static validateProps() {
 		return [true] as unknown as LuaTuple<[boolean, string?]>;
 	}
@@ -11,7 +11,7 @@ export default class ValueBar extends Component<IValuebarData, State> {
 	render() {
 		return (
 			<textlabel
-				Size={new UDim2(1, 0, 0, VALUE_BAR_SIZE_Y)}
+				Size={new UDim2(1, 0, 0, SidebarNamespace.VALUE_BAR_SIZE_Y)}
 				LayoutOrder={this.props.index}
 				Text={tostring(this.props.updater)}
 			></textlabel>
