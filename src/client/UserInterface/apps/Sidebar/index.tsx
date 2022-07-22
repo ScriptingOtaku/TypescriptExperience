@@ -31,7 +31,7 @@ export default class Sidebar extends Component<Props> {
 				}
 			>
 				<uilistlayout
-					Padding={new UDim(0, SidebarNamespace.PADDING)}
+					Padding={new UDim(0, SidebarNamespace.PADDING * 2)}
 					FillDirection={"Vertical"}
 					HorizontalAlignment={"Center"}
 					SortOrder={"LayoutOrder"}
